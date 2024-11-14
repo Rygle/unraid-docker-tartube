@@ -39,14 +39,16 @@ RUN \
 	add-pkg --virtual build-dependencies \
 		wget \
 		&& \
-	echo "download tartbue $TARTUBE_VERSION..." && \
+	echo "download tartube $TARTUBE_VERSION..." && \
 	wget -q ${TARTUBE_URL} && \
 	dpkg -i python3-tartube_${TARTUBE_VERSION}.deb && \
 	del-pkg build-dependencies && \
 	rm -rf /tmp/* /tmp/.[!.]*
 
 # Add files
+USER root
 COPY rootfs/ /
+USER 1001
 RUN chmod +x /rootfs/startup.sh
 	
 # Set environment variables.
