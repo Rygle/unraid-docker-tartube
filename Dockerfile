@@ -28,8 +28,8 @@ RUN \
 		ffmpeg \
 		locales \
 		&& \
-    sed-patch 's/# en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen && \
-    locale-gen && \
+        sed-patch 's/# en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen && \
+        locale-gen && \
 	pip3 install --no-cache-dir --upgrade pip && pip3 install --no-cache-dir \
 		streamlink \
 		youtube-dl \
