@@ -15,8 +15,7 @@ ARG TARTUBE_VERSION=2.5.040
 ARG TARTUBE_URL=https://github.com/axcore/tartube/releases/download/v2.5.040/python3-tartube_2.5.040.deb
 
 ### Install Tartube
-RUN \
-	add-pkg \
+RUN	add-pkg \
 		python3-matplotlib \
 		python3-pip \
 		python3-feedparser \
@@ -27,24 +26,24 @@ RUN \
 		at-spi2-core \	
 		fonts-wqy-zenhei \
 		ffmpeg \
-		locales \
-		&& \
-	sed-patch 's/# en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen && \
-	locale-gen && \
-	pip3 install --no-cache-dir --upgrade pip && pip3 install --no-cache-dir \
+		locales
+#		&& \
+RUN	sed-patch 's/# en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen
+RUN	locale-gen
+RUN	pip3 install --no-cache-dir --upgrade pip && pip3 install --no-cache-dir \
 		streamlink \
 		youtube-dl \
 		moviepy \
-		cairocffi \
-		&& \
-	add-pkg --virtual build-dependencies \
-		wget \
-		&& \
-	# echo "download tartube 2.5.040..." && \
-	wget -q https://github.com/axcore/tartube/releases/download/v2.5.040/python3-tartube_2.5.040.deb && \
-	dpkg -i python3-tartube_2.5.040.deb && \
-	del-pkg build-dependencies && \
-	rm -rf /tmp/* /tmp/.[!.]*
+		cairocffi
+#		&& \
+RUN	add-pkg --virtual build-dependencies \
+		wget
+#		&& \
+	# echo "download tartube 2.5.040..."
+RUN	wget -q https://github.com/axcore/tartube/releases/download/v2.5.040/python3-tartube_2.5.040.deb
+RUN	dpkg -i python3-tartube_2.5.040.deb
+RUN	del-pkg build-dependencies
+RUN	rm -rf /tmp/* /tmp/.[!.]*
 
 # Add files
 # USER root
