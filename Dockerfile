@@ -46,9 +46,9 @@ RUN \
 	rm -rf /tmp/* /tmp/.[!.]*
 
 # Add files
-USER root
+# USER root
 COPY rootfs/ /
-USER 1001
+# USER 1001
 RUN chmod +x /rootfs/startup.sh
 	
 # Set environment variables.
