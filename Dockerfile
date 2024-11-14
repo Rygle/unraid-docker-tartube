@@ -43,8 +43,10 @@ RUN \
  	wget -q ${TARTUBE_URL} && \
  	dpkg -i python3-tartube_${TARTUBE_VERSION}.deb && \
  	del-pkg build-dependencies && \
- 	rm -rf /tmp/* /tmp/.[!.]* # buildkit
-COPY rootfs/ / # buildkit
+ 	rm -rf /tmp/* /tmp/.[!.]*
+# buildkit
+COPY rootfs/ /
+# buildkit
 RUN  set-cont-env APP_NAME "Tartube" &&\
      set-cont-env APP_VERSION "$TARTUBE_VERSION" # buildkit
 	 
