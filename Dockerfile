@@ -1,5 +1,5 @@
 # Pull base image.
-FROM jlesage/baseimage-gui:ubuntu-20.04-v4
+FROM jlesage/baseimage-gui:ubuntu-24.04-v4
 
 # Define working directory.
 WORKDIR /tmp
@@ -10,7 +10,7 @@ RUN \
 	install_app_icon.sh "$APP_ICON_URL"
 
 # Define download URLs.
-ARG TARTUBE_VERSION=2.4.221
+ARG TARTUBE_VERSION=2.5.040
 ARG TARTUBE_URL=https://github.com/axcore/tartube/releases/download/v${TARTUBE_VERSION}/python3-tartube_${TARTUBE_VERSION}.deb
 
 ### Install Tartube
@@ -47,6 +47,7 @@ RUN \
 
 # Add files
 COPY rootfs/ /
+chmod +x /rootfs/startup.sh
 	
 # Set environment variables.
 RUN \
