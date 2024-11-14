@@ -23,4 +23,4 @@ jobs:
     - name: Build the Docker image
       run: docker build . --file Dockerfile --tag ozrygle/test:tartube$(date +%s) --tag ozrygle/test:tartube_latest
     - name: Docker Push Latest
-      run: docker push ozrygle/tartube:latest
+      run: docker push ozrygle/test:tartube_latest
