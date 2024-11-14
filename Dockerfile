@@ -11,7 +11,8 @@ RUN \
 
 # Define download URLs.
 ARG TARTUBE_VERSION=2.5.040
-ARG TARTUBE_URL=https://github.com/axcore/tartube/releases/download/v${TARTUBE_VERSION}/python3-tartube_${TARTUBE_VERSION}.deb
+# ARG TARTUBE_URL=https://github.com/axcore/tartube/releases/download/v${TARTUBE_VERSION}/python3-tartube_${TARTUBE_VERSION}.deb
+ARG TARTUBE_URL=https://github.com/axcore/tartube/releases/download/v2.5.040/python3-tartube_2.5.040.deb
 
 ### Install Tartube
 RUN \
@@ -28,8 +29,8 @@ RUN \
 		ffmpeg \
 		locales \
 		&& \
-# sed-patch 's/# en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen && \
-# locale-gen && \
+	sed-patch 's/# en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen && \
+	locale-gen && \
 	pip3 install --no-cache-dir --upgrade pip && pip3 install --no-cache-dir \
 		streamlink \
 		youtube-dl \
@@ -39,9 +40,9 @@ RUN \
 	add-pkg --virtual build-dependencies \
 		wget \
 		&& \
-	echo "download tartube $TARTUBE_VERSION..." && \
-	wget -q ${TARTUBE_URL} && \
-	dpkg -i python3-tartube_${TARTUBE_VERSION}.deb && \
+	# echo "download tartube 2.5.040..." && \
+	wget -q https://github.com/axcore/tartube/releases/download/v2.5.040/python3-tartube_2.5.040.deb && \
+	dpkg -i python3-tartube_2.5.040.deb && \
 	del-pkg build-dependencies && \
 	rm -rf /tmp/* /tmp/.[!.]*
 
@@ -54,7 +55,7 @@ RUN chmod +x /rootfs/startup.sh
 # Set environment variables.
 RUN \
     set-cont-env APP_NAME "Tartube" && \
-    set-cont-env APP_VERSION "$TARTUBE_VERSION"
+    set-cont-env APP_VERSION "2.5.040"
 	
 # Define mountable directories.
 VOLUME ["/storage"]
