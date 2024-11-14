@@ -47,7 +47,9 @@ RUN \
 
 # Add files
 COPY rootfs/ /
+USER root
 RUN chmod +x /startup.sh
+USER 1001
 	
 # Set environment variables.
 RUN \
