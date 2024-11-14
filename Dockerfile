@@ -6,11 +6,11 @@ WORKDIR /tmp
 
 # Generate and install favicons.
 RUN \
-	APP_ICON_URL=https://raw.githubusercontent.com/angelics/unraid-docker-tartube/main/tartube_icon.png &&\
- 	install_app_icon.sh "$APP_ICON_URL"
+	APP_ICON_URL=https://raw.githubusercontent.com/angelics/unraid-docker-tartube/main/tartube_icon.png && \
+	install_app_icon.sh "$APP_ICON_URL"
 
-# buildkit
-ARG TARTUBE_VERSION=2.5.040
+# Define download URLs.
+ARG TARTUBE_VERSION=2.4.221
 ARG TARTUBE_URL=https://github.com/axcore/tartube/releases/download/v${TARTUBE_VERSION}/python3-tartube_${TARTUBE_VERSION}.deb
 
 ### Install Tartube
@@ -23,13 +23,13 @@ RUN \
 		python3-gi \
 		gir1.2-gtk-3.0 \
 		dbus-x11 \
-		at-spi2-core \
+		at-spi2-core \	
 		fonts-wqy-zenhei \
 		ffmpeg \
-		locales \		
+		locales \
 		&& \
-	sed-patch 's/# en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen && \
-	locale-gen &&\
+    sed-patch 's/# en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen && \
+    locale-gen && \
 	pip3 install --no-cache-dir --upgrade pip && pip3 install --no-cache-dir \
 		streamlink \
 		youtube-dl \
@@ -39,16 +39,19 @@ RUN \
 	add-pkg --virtual build-dependencies \
 		wget \
 		&& \
-	echo "download tartube $TARTUBE_VERSION..." && \
- 	wget -q ${TARTUBE_URL} && \
- 	dpkg -i python3-tartube_${TARTUBE_VERSION}.deb && \
- 	del-pkg build-dependencies && \
- 	rm -rf /tmp/* /tmp/.[!.]*
-# buildkit
+	echo "download tartbue $TARTUBE_VERSION..." && \
+	wget -q ${TARTUBE_URL} && \
+	dpkg -i python3-tartube_${TARTUBE_VERSION}.deb && \
+	del-pkg build-dependencies && \
+	rm -rf /tmp/* /tmp/.[!.]*
+
+# Add files
 COPY rootfs/ /
-# buildkit
-RUN  set-cont-env APP_NAME "Tartube" &&\
-     set-cont-env APP_VERSION "$TARTUBE_VERSION" # buildkit
-	 
+	
+# Set environment variables.
+RUN \
+    set-cont-env APP_NAME "Tartube" && \
+    set-cont-env APP_VERSION "$TARTUBE_VERSION"
+	
 # Define mountable directories.
-VOLUME [/storage]
+VOLUME ["/storage"]
