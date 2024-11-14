@@ -46,8 +46,8 @@ RUN \
 	rm -rf /tmp/* /tmp/.[!.]*
 
 # Add files
-COPY rootfs/ /
 USER root
+COPY rootfs/ /
 RUN chmod +x /startup.sh
 USER 1001
 	
