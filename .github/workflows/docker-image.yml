@@ -1,0 +1,26 @@
+name: Docker Image CI
+
+on:
+  workflow_dispatch:
+    branches: [ "main" ]
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4    
+    - name: docker login
+      env:
+        DOCKER_USER: ${{secrets.DOCKER_USER}}
+        DOCKER_PASSWORD: ${{secrets.DOCKER_PASSWORD}}
+      run:
+        docker login -u $DOCKER_USER -p $DOCKER_PASSWORD 
+    - name: Build the Docker image
+      run: docker build . --file Dockerfile --tag ozrygle/tartube:$(date +%s) --tag ozrygle/tartube:latest
+    - name: Docker Push Latest
+      run: docker push ozrygle/tartube:latest
